@@ -2,16 +2,24 @@ import requests
 from sys import argv
 import re
 
-#argv[1]
+arguments = ["--thread", "-t", "-o", "--output"]
 
-httpfile = open(argv[1],'rt')
+if argv[1] in arguments:
+    if argv[1] == "--thread" or argv[1] == "-t":
+      if int(argv[2]) < 120 :
+          thread = int(argv[2])
+      else:
+          print("Invalid Thread")
 
-for line in httpfile:
-#    print(line)
-    if re.search("^http*",line):
-        req = requests.get(line)
-    if req.ok:
-        print(line)
-
-httpfile.close()
+def TheMain():
+    httpfile = open(argv[1],'rt')
+    for line in httpfile:
+        line = line.split('\n');
+        line = line[0]
+        if re.search("^http*",line):
+            req = requests.get(line)
+        if req.ok:
+            print(200)
+            print(line)
+    httpfile.close()
 
