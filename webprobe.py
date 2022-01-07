@@ -44,9 +44,9 @@ def do_request():
         else:
             print("Oops unable to connect.\n")
 
-"""
-Connecting the domains from file using threads.
-"""
+
+# Connecting the domains from file using threads.
+
 threads = []
 for i in range(no_threads):
     t = threading.Thread(target=do_request)
