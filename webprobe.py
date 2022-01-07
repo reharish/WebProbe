@@ -5,11 +5,10 @@ import requests
 no_threads = 5
 arguments = ["--thread", "-t", "-o", "--output"]
 
-"""
-Usage:
-python3 webprobe.py <SampleFile> 
-python3 webprobe.py --thread <NoOfThreads> <SampleFile>
-"""
+# Usage:
+# python3 webprobe.py <SampleFile> 
+# python3 webprobe.py --thread <NoOfThreads> <SampleFile>
+
 length_of_arguments = len(argv)
 file_name = argv[length_of_arguments -  1]
 
@@ -45,9 +44,9 @@ def do_request():
         else:
             print("Oops unable to connect.\n")
 
-"""
-Connecting the domains from file using threads.
-"""
+
+# Connecting the domains from file using threads.
+
 threads = []
 for i in range(no_threads):
     t = threading.Thread(target=do_request)
