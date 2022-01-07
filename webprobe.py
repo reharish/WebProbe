@@ -5,11 +5,10 @@ import requests
 no_threads = 5
 arguments = ["--thread", "-t", "-o", "--output"]
 
-"""
-Usage:
-python3 webprobe.py <SampleFile> 
-python3 webprobe.py --thread <NoOfThreads> <SampleFile>
-"""
+# Usage:
+# python3 webprobe.py <SampleFile> 
+# python3 webprobe.py --thread <NoOfThreads> <SampleFile>
+
 length_of_arguments = len(argv)
 file_name = argv[length_of_arguments -  1]
 
