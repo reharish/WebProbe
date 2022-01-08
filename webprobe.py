@@ -42,12 +42,12 @@ with open(file_name) as f:
 def do_request():
     for line in lines:
         try:
-	        req = requests.get(line, ssl_verify=False, timeout=5)
-			if req.ok:
-        	    print(line, end = ' ')
-            	print(200)
-        except:
-			pass
+            req = requests.get(line, ssl_verify=False, timeout=5)
+            if req.ok:
+                print(line, end = ' ')
+                print(200)
+        except :
+            pass
 
 # Connecting the domains from file using threads.
 
