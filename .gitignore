@@ -7,7 +7,7 @@ __pycache__/
 *.so
 *.swp
 *.swo
-
+*.save
 # Distribution / packaging
 .Python
 build/
