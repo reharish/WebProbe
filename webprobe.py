@@ -2,6 +2,10 @@ from sys import argv
 import threading
 import requests
 
+# To suppress SSL warnings.
+from requests.packages import urllib3
+urllib3.disable_warnings()
+
 no_threads = 5
 arguments = ["--thread", "-t", "-o", "--output"]
 
@@ -37,13 +41,13 @@ with open(file_name) as f:
     
 def do_request():
     for line in lines:
-        req = requests.get(line, verify=False)
-        if req.ok:
-            print(line, end = ' ')
-            print(200)
-        else:
-            print("Oops unable to connect.\n")
-
+        try:
+	        req = requests.get(line, ssl_verify=False, timeout=5)
+			if req.ok:
+        	    print(line, end = ' ')
+            	print(200)
+        except:
+			pass
 
 # Connecting the domains from file using threads.
 
