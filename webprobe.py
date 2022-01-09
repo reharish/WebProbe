@@ -70,4 +70,5 @@ else:
         threads[i].start()
     for i in range(no_threads):
         threads[i].join()
+
 exit(0)
