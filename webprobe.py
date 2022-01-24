@@ -28,7 +28,7 @@ if length_of_arguments > 1:
             print("Enter the arguments with file.\n")
             exit(1)
 elif length_of_arguments == 1:
-    print("Pass arguments.\n")
+    print("Pass arguments.")
     exit(2)
         
 """
