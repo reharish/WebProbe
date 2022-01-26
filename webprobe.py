@@ -8,7 +8,6 @@ urllib3.disable_warnings()
 
 no_threads = 5
 arguments = ["--thread", "-t", "-o", "--output"]
-
 # Usage:
 # python3 webprobe.py <SampleFile> 
 # python3 webprobe.py --thread <NoOfThreads> <SampleFile>
