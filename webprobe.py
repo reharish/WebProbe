@@ -1,6 +1,7 @@
 from sys import argv
 import threading
 import requests
+import argparser
 
 # To suppress SSL warnings.
 from requests.packages import urllib3
@@ -8,27 +9,13 @@ urllib3.disable_warnings()
 
 no_threads = 5
 arguments = ["--thread", "-t", "-o", "--output"]
+"""
 # Usage:
 # python3 webprobe.py <SampleFile> 
 # python3 webprobe.py --thread <NoOfThreads> <SampleFile>
-
-length_of_arguments = len(argv)
-file_name = argv[length_of_arguments -  1]
-
-if length_of_arguments > 1:
-    if argv[1] in arguments:
-        if argv[1] == "--thread" or argv[1] == "-t":
-            if int(argv[2]) <= 120 :
-                no_threads = int(argv[2])
-            else:
-                print("Enter threads below 120.\n")
-                exit(120)
-        else:
-            print("Enter the arguments with file.\n")
-            exit(1)
-elif length_of_arguments == 1:
-    print("Pass arguments.")
-    exit(2)
+"""
+parser=argparse.ArgumentParser(description='WebProber V1.0')
+parser.add_argument('-f',help="Specify filename.")
         
 """
 Reading the file containing domain names.
@@ -48,8 +35,9 @@ def do_request():
         except :
             pass
 
-# Connecting the domains from file using threads.
-
+"""Connecting the domains from file using threads.
+: Thread implementation
+"""
 threads = []
 for i in range(no_threads):
     t = threading.Thread(target=do_request)

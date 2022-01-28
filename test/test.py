@@ -1,10 +1,16 @@
-import sys
+import argparse
+import threading
 
-sys.path.insert(0,"../")
+parser=argparse.ArgumentParser(description='WebProber V1.0')
+parser.add_argument('-f','--filename',type=str,required=True,help="Specify filename.")
+parser.add_argument('-t','--thread',type=int,const=5,nargs='?',help="Specify No.of threads to spawn (default = 5)")
 
-try:
-    import webprobe.py
+args = parser.parse_args()
+urlfile=open(args.filename,'rt')
+
+# test
+
+for i in range(5):
+    line=urlfile.readline()
+    print(line)
     
-except Exception as e:
-    print("cant import")
-
