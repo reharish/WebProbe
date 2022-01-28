@@ -2,15 +2,22 @@ import threading
 import requests
 import argparse
 
+"""
+ArgParse to getting input
+"""
 parser=argparse.ArgumentParser(description='WebProber V1.0')
 parser.add_argument('-f','--filename',type=str,required=True,help="Specify filename.")
 parser.add_argument('-t','--thread',type=int,const=5,nargs='?',help="Specify No.of threads to spawn (default = 5)")
 
 args = parser.parse_args()
 
+"""
+Disable warnings
+"""
 requests.packages.urllib3.disable_warnings()
 
 def do_request(url):
+    print(url)
     response = requests.get(url, verify=False, timeout=5)
     if response.ok:
         print(url)
@@ -32,6 +39,8 @@ def process_file(fname, t):
         else:
              n_threads.append(request)
              request.start()
+             
+
 
 
 
