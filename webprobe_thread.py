@@ -12,7 +12,7 @@ parser.add_argument('-t','--thread',type=int,const=5,nargs='?',help="Specify No.
 args = parser.parse_args()
 
 """
-Disable warnings
+Supressing warning caused by requests
 """
 requests.packages.urllib3.disable_warnings()
 
