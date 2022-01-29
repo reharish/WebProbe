@@ -17,7 +17,7 @@ Supressing warning caused by requests
 requests.packages.urllib3.disable_warnings()
 
 def do_request(url):
-    response = requests.get(url, verify=False, timeout=5)
+    response = requests.get(url, verify=False, allow_redirects=False, timeout=5)
     if response.ok:
         print(url)
         
