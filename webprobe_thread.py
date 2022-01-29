@@ -17,32 +17,29 @@ Supressing warning caused by requests
 requests.packages.urllib3.disable_warnings()
 
 def do_request(url):
-    print(url)
     response = requests.get(url, verify=False, timeout=5)
     if response.ok:
         print(url)
         
+
 def process_file(fname, t):
     n_threads = []
     fp = open(fname,'rt')
     while True:
         line=fp.readline().strip()
         if not line:
-            break            
-        request = threading.Thread(target=do_request, args=(line,))
+            break
+        req = threading.Thread(target=do_request, args=(line,))
         if len(n_threads) == t:
             while True:
                 for i in n_threads:
                     if not i.is_alive():
-                        i = request
+                        i = req
                         break
         else:
-             n_threads.append(request)
-             request.start()
-             
-
-
-
+             n_threads.append(req)
+             req.start()
+        req.join()
 
 if __name__=="__main__":
     process_file(args.filename, args.thread)
