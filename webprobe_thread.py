@@ -36,4 +36,5 @@ def process_file(fname, t=5):
 
 
 if __name__=="__main__":
+    if not args.thread: process_file(args.filename)
     process_file(args.filename, args.thread)
