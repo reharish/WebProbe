@@ -1,7 +1,7 @@
 import threading
 import requests
 import argparse
-from time import sleep
+#from time import sleep
 """
 ArgParse to getting input
 """
@@ -20,7 +20,7 @@ def do_request(url):
     if not url: return
     try:
         response = requests.get(url, verify=False, allow_redirects=False, timeout=1)
-        print(url) if response.ok else print(f"response: {response.status_code} url: {url}")
+        print(url) #if response.ok else print(f"response: {response.status_code} url: {url}")
     except Exception as e:
         pass
         
@@ -30,11 +30,16 @@ def process_file(fname, t=5):
     arr = list(map(lambda a : a.strip(), fp.readlines()))
     for each in arr:
         req = threading.Thread(target=do_request, args=(each,))
-        while threading.active_count() >= t:
-            sleep(1) #every one sec we are checking thread count
+        #print(threading.active_count())
+        while True:
+            if not threading.active_count() >=t:
+                break
+        # Needs to be changed
         req.start()
-
+    fp.close()
 
 if __name__=="__main__":
+    print(args.thread)
+    print(args.filename)
     if not args.thread: process_file(args.filename)
     process_file(args.filename, args.thread)
