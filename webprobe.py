@@ -1,55 +1,52 @@
-from sys import argv
 import threading
 import requests
-import argparser
+import argparse
+from time import sleep
 
-# To suppress SSL warnings.
-from requests.packages import urllib3
-urllib3.disable_warnings()
+"""ArgParse for CLI input"""
 
-no_threads = 5
-arguments = ["--thread", "-t", "-o", "--output"]
-"""
-# Usage:
-# python3 webprobe.py <SampleFile> 
-# python3 webprobe.py --thread <NoOfThreads> <SampleFile>
-"""
-parser=argparse.ArgumentParser(description='WebProber V1.0')
-parser.add_argument('-f',help="Specify filename.")
-        
-"""
-Reading the file containing domain names.
-"""
-with open(file_name) as f:
-    lines = f.readlines()
-    lines = [line.rstrip() for line in lines]
+parser=argparse.ArgumentParser(description='WebProbe V0.1')
+parser.add_argument('-f','--filename',type=str,required=True,help="Specify filename.")
+parser.add_argument('-t','--threads',type=int,const=5,nargs='?',help="Specify No.of threads to spawn (default = 5)")
 
-    
-def do_request():
-    for line in lines:
-        try:
-            req = requests.get(line, ssl_verify=False, timeout=5)
-            if req.ok:
-                print(line, end = ' ')
-                print(200)
-        except :
-            pass
+args = parser.parse_args()
 
-"""Connecting the domains from file using threads.
-: Thread implementation
-"""
-threads = []
-for i in range(no_threads):
-    t = threading.Thread(target=do_request)
-    t.daemon = True
-    threads.append(t)
+"""Supressing warning caused by requests"""
 
-for i in range(no_threads):
-    threads[i].start()
+requests.packages.urllib3.disable_warnings()
 
-for i in range(no_threads):
-    threads[i].join()
+def do_request(url):
+    """ Post request to the site
+    print the url to console if response is 200
+    """
+    if not url: return
+    try:
+        response = requests.get(url, verify=False, allow_redirects=False, timeout=1)
+        print(url) #if response.ok else print(f"response: {response.status_code} url: {url}")
+    except Exception as e:
+        pass
 
 
-exit(0)
+def process_file(fname, t):
+    """ Thread Implementation """
+    fp = open(fname,'rt')
+    arr = list(map(lambda a : a.strip(), fp.readlines()))
+    for each in arr:
+        req = threading.Thread(target=do_request, args=(each,))
+        #print(threading.active_count())
+        while threading.active_count() >=t:
+            sleep(0.1)
+        # Needs to be changed
+        req.start()
+    fp.close()
 
+if __name__=="__main__":
+    try:
+        if args.threads == None:
+            threads_c=5
+        else:
+            threads_c=args.threads
+        #print(15*"="+"\nFile Name : {}\nThread Count : {}\n".format(args.filename,threads_c)+15*"="+"\n")
+        process_file(args.filename, threads_c)
+    except Exception as err:
+        print("\33[031mError !!\33[0m\n \n{}".format(err))
